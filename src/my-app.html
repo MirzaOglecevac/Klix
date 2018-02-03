@@ -1,0 +1,692 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/lazy-image/lazy-image.html">
+<link rel="import" href="../bower_components/paper-card-master/paper-card.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/app-menu/app-menu.html">
+<link rel="import" href="../bower_components/app-menu/app-submenu.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-card-master/paper-card.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="my-icons.html">
+
+<link rel="lazy-import" href="my-view1.html">
+<link rel="lazy-import" href="my-view2.html">
+<link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="my-view404.html">
+
+<dom-module id="my-app">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+
+        display: block;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+        padding: 0;
+      }
+
+      app-header {
+        color: #fff;
+        background-color: #fff;
+        height: 50px;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      app-toolbar {
+        height: 40px;
+        width: 85%;
+        margin: 10px auto 0px auto;
+        padding: 0;
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      app-header-layout {
+        margin: 0;
+        padding: 0;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+
+      iron-pages {
+        min-width: 600px;
+        width: 89%;
+        margin: 0 auto;
+      }
+
+
+      .imageItem {
+        height: 70%;
+        padding: 5px 5px 20px 5px;
+        margin: 0 20px 0 0;
+        cursor: pointer;
+      }
+
+      .menuItem {
+        color: #777;
+        font-weight: normal;
+        font-size: 0.7em;
+        width: 7%;
+        height: 100%;
+        padding: 18px 4px 4px 4px;
+        margin: 0 0 0 0;
+        cursor: pointer;
+      }
+
+      .bigger {
+        width: 9%;
+      }
+
+      .iconItem {
+        color: #777;
+        padding: 0;
+        margin: 0 5px 0 0;
+      }
+
+      .logo {
+        width: 60px;
+        height: 25px;
+      }
+
+      .headerIcons{
+        --iron-icon-height: 16px;
+        --iron-icon-width: 16px;
+        padding-bottom: 3px;
+      }
+
+      .rightIcons{
+        --iron-icon-height: 26px;
+        --iron-icon-width: 26px;
+        padding-bottom: 6px;
+        cursor: pointer;
+      }
+
+
+
+
+      /*MENU*/
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top:40px;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        z-index: 1;
+    }
+
+  	app-menu {
+  		padding: 0;
+  	}
+
+    .dropdown-content a {
+        display: block;
+        padding: 10px;
+        background-color: #444;
+        border-bottom: 1px solid #999;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #777;
+    }
+
+    .arrow_box {
+    	//position: relative;
+    	background: #444;
+    	border: 4px solid #;
+    }
+    .arrow_box:after, .arrow_box:before {
+    	bottom: 100%;
+    	left: 50%;
+    	border: solid transparent;
+    	content: " ";
+    	height: 0;
+    	width: 0;
+    	position: absolute;
+    	pointer-events: none;
+    }
+
+    .arrow_box:after {
+    	border-color: rgba(136, 183, 213, 0);
+    	border-bottom-color: #444;
+    	border-width: 10px;
+    	margin-left: -60px;
+    }
+    .arrow_box:before {
+    	border-color: rgba(0, 0, 0, 0);
+    	border-bottom-color: #;
+    	border-width: 36px;
+    	margin-left: -36px;
+    }
+
+
+    .menuItem:hover .dropdown-content  {
+        display: block;
+    }
+
+
+
+    /*Color of menu items*/
+
+
+    #vijesti iron-icon , #vijesti2 iron-icon {
+        color: #d34e26;
+    }
+
+    #vijesti:hover, #vijesti2:hover {
+        color: #d34e26;
+    }
+
+    #biznis iron-icon, #biznis2 iron-icon  {
+        color: #f9a125;
+    }
+
+    #biznis:hover, #biznis2:hover {
+        color: #f9a125;
+    }
+
+    #sport iron-icon, #sport2 iron-icon  {
+        color: green;
+    }
+
+    #sport:hover, #sport2:hover {
+        color: green;
+    }
+
+    #magazin iron-icon,  #magazin2 iron-icon{
+        color: #811adb;
+    }
+
+    #magazin:hover, #magazin2:hover {
+        color: #811adb;
+    }
+
+    #lifestyle iron-icon, #lifestyle2 iron-icon  {
+        color: #db941a;
+    }
+
+    #lifestyle:hover, #lifestyle2:hover {
+        color: #db941a;
+    }
+
+    #scitech iron-icon  {
+        color: #3694db;
+    }
+
+    #scitech:hover {
+        color: #3694db;
+    }
+
+    #auto iron-icon  {
+        color: blue;
+    }
+
+    #auto:hover {
+        color: blue;
+    }
+
+    #forum:hover, #krizaljka:hover, #dojavi:hover, #vise:hover {
+        color: #3694db;
+    }
+
+    #mobileMenu {
+        display: none;
+    }
+
+
+
+    /* MEDIA QUERIES */
+
+    @media only screen and (max-width: 1310px) {
+        #dojavi  {
+          display: none;
+        }
+    }
+
+    @media only screen and (max-width: 1230px) {
+        #krizaljka  {
+          display: none;
+        }
+    }
+
+    @media only screen and (max-width: 1110px) {
+        #forum, #vise  {
+          display: none;
+        }
+
+        .menuItem {
+          width: 10%;
+        }
+    }
+
+
+
+    @media only screen and (max-width: 1000px) {
+        app-toolbar div {
+          display: none;
+        }
+
+        #mobileMenu {
+          display: inline-block;
+          min-width: 600px;
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          margin: 0;
+          position: fixed;
+          top: 0;
+          color: black;
+          left: 0;
+        }
+
+        #mobileMenu .rightIcons{
+          float: right;
+          margin: 10px 10px;
+        }
+
+        #mobileMenu img{
+          position: relative;
+          left: 40%;
+          top: 10px;
+          height: 25px !important;
+        }
+
+        #mobileMenu .leftIcon{
+          margin-left: 10px;
+        }
+
+        #mobileMenu .leftIcon:hover{
+          color: #42b7ed;
+          cursor: pointer;
+        }
+    }
+
+    @media only screen and (min-width: 1000px) {
+        #mobileDropdownMenu {
+          display: none !important;
+        }
+      }
+
+    #mobileDropdownMenu {
+      display: none;
+      height: 100%;
+    width: 100%;
+    font-size: 20px;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 50px;
+    //background-color: rgb(0,0,0); /* Black fallback color */
+    //background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    }
+
+    #mobileDropdownMenu div {
+      width: 100%;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    #mobileDropdownMenu .expandIcon {
+      float: right;
+      color: #777;
+      margin-right: 40px;
+    }
+
+    .submenu{
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    .submenu a {
+      width: 100%;
+      padding: 10px 10px 10px 22px;
+      background-color: #444;
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid #888;
+    }
+
+    .submenu a:hover{
+      background-color: #666;
+      color: #4286f4;
+    }
+
+    #vijestiSub, #sportSub {
+      display: none;
+    }
+
+
+    </style>
+
+    <app-location
+        route="{{route}}"
+        url-space-regex="^[[rootPath]]">
+    </app-location>
+
+    <app-route
+        route="{{route}}"
+        pattern="[[rootPath]]:page"
+        data="{{routeData}}"
+        tail="{{subroute}}">
+    </app-route>
+
+    <app-drawer-layout fullbleed narrow="{{narrow}}">
+      <!-- Drawer content
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="view1" href="[[rootPath]]view1">View One</a>
+          <a name="view2" href="[[rootPath]]view2">View Two</a>
+          <a name="view3" href="[[rootPath]]view3">View Three</a>
+        </iron-selector>
+      </app-drawer> -->
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header slot="header" fixed >
+          <app-toolbar>
+
+
+              <div class="imageItem"><img  class="logo" src="klix.png" alt="Image Not Found" /></div>
+              <div id="vijesti" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Vijesti
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                </app-menu>
+              </div>
+              <div id="biznis" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Biznis
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                  <a href="#">Link 4</a>
+                </app-menu>
+              </div>
+              <div id="sport" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Sport
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                  <a href="#">Link 4</a>
+                </app-menu>
+              </div>
+              <div id="magazin" class="menuItem bigger"><iron-icon class="headerIcons" icon="label"></iron-icon> Magazin
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                </app-menu>
+              </div>
+              <div id="lifestyle" class="menuItem bigger"><iron-icon class="headerIcons" icon="label"></iron-icon> Lifestyle
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                </app-menu>
+              </div>
+              <div id="scitech" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Scitech
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                </app-menu>
+              </div>
+              <div id="auto" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Auto
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                  <a href="#">Link 4</a>
+                  <a href="#">Link 5</a>
+                </app-menu>
+              </div>
+              <div id="forum" class="menuItem"><iron-icon class="headerIcons" icon="question-answer"></iron-icon> Forum
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                  <a href="#">Link 4</a>
+                  <a href="#">Link 5</a>
+                </app-menu>
+              </div>
+              <div id="krizaljka" class="menuItem"><iron-icon class="headerIcons" icon="fullscreen-exit"></iron-icon> Krizaljka </div>
+              <div id="dojavi" class="menuItem bigger"><iron-icon class="headerIcons" icon="create"></iron-icon> Dojavi vijest </div>
+              <div id="vise" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Vise
+                <app-menu class="dropdown-content arrow_box">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                  <a href="#">Link 4</a>
+                </div>
+              </app-menu>
+              <div class="iconItem"><iron-icon class="rightIcons" icon="search"></iron-icon>  </div>
+              <div class="iconItem"><iron-icon class="rightIcons" icon="account-circle"></iron-icon> </div>
+
+
+          </app-toolbar>
+
+          <div id="mobileMenu">
+            <iron-icon id="mobileMenuIcon" class="leftIcon" icon="view-list" on-click="toggleMobileMenu"></iron-icon>
+            <img  class="logo" src="klix.png" alt="Image Not Found" />
+            <iron-icon class="rightIcons" icon="account-circle"></iron-icon>
+            <iron-icon class="rightIcons" icon="search"></iron-icon>
+          </div>
+
+
+        </app-header>
+
+
+        <!-- Mobile dropdown menu -->
+
+        <app-menu id="mobileDropdownMenu"selected="0">
+
+          <!--
+          <app-submenu>
+            <div class="app-menu-item" slot="submenu-trigger" >
+              <app-menu-icon-item icon="chrome-reader-mode">Contacts</app-menu-icon-item>
+              <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
+            </div>
+            <app-menu slot="submenu-content" >
+              <a class="app-menu-item" href="javascript:void(0)">John</a>
+              <a class="app-menu-item" href="javascript:void(0)">Harry</a>
+            </app-menu>
+          </app-submenu>
+
+          <app-submenu>
+            <div class="app-menu-item" slot="submenu-trigger">
+              <app-menu-icon-item icon="chrome-reader-mode">Contacts</app-menu-icon-item>
+              <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
+            </div>
+            <app-menu slot="submenu-content">
+              <a class="app-menu-item" href="javascript:void(0)">John</a>
+              <a class="app-menu-item" href="javascript:void(0)">Harry</a>
+            </app-menu>
+          </app-submenu>
+
+          <app-submenu>
+            <div class="app-menu-item" slot="submenu-trigger">
+              <app-menu-icon-item icon="chrome-reader-mode">Contacts</app-menu-icon-item>
+              <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
+            </div>
+            <app-menu slot="submenu-content">
+              <a class="app-menu-item" href="javascript:void(0)">John</a>
+              <a class="app-menu-item" href="javascript:void(0)">Harry</a>
+            </app-menu>
+          </app-submenu>
+
+        -->
+
+        <div id="vijesti2" class="menuItem" on-click="toggleMobileSubmenus"><iron-icon class="headerIcons" icon="label"></iron-icon> Vijesti <iron-icon id="vijestiexpand" class="expandIcon" icon="expand-more" on-click="toggleMobileSubmenus"></iron-icon>
+          <app-menu id="vijestiSub" class="submenu">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+            <a href="#">Link 4</a>
+          </div>
+        </div>
+        <div id="biznis2" class="menuItem" ><iron-icon class="headerIcons" icon="label"></iron-icon> Biznis </div>
+        <div id="sport2" class="menuItem" on-click="toggleMobileSubmenus"><iron-icon class="headerIcons" icon="label"></iron-icon> Sport <iron-icon id="sportexpand"class="expandIcon" icon="expand-more" on-click="toggleMobileSubmenus"></iron-icon>
+          <app-menu id="sportSub" class="submenu">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+          </div>
+        </div>
+        <div id="magazin2" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Magazin </div>
+        <div id="lifestyle2" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Lifestyle </div>
+        <div id="scitech2" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Scitech </div>
+        <div id="auto2" class="menuItem"><iron-icon class="headerIcons" icon="label"></iron-icon> Auto </div>
+
+        </app-menu>
+
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="view404"
+            role="main">
+          <my-view1 name="view1"></my-view1>
+          <my-view2 name="view2"></my-view2>
+          <my-view3 name="view3"></my-view3>
+          <my-view404 name="view404"></my-view404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    class MyApp extends Polymer.Element {
+      static get is() { return 'my-app'; }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          },
+
+
+          routeData: Object,
+          subroute: String,
+          // This shouldn't be neccessary, but the Analyzer isn't picking up
+          // Polymer.Element#rootPath
+          rootPath: String,
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      _routePageChanged(page) {
+        // If no page was found in the route data, page will be an empty string.
+        // Default to 'view1' in that case.
+        this.page = page || 'view1';
+
+        // Close a non-persistent drawer when the page & route are changed.
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      }
+
+      toggleMobileMenu(){
+
+        if(this.$.mobileMenuIcon.icon == "clear"){
+          this.$.mobileDropdownMenu.style="display: none;"
+          this.$.mobileMenuIcon.icon="view-list";
+        }else {
+          this.$.mobileMenuIcon.icon="clear";
+          this.$.mobileDropdownMenu.style="display: block;"
+        }
+
+      }
+
+      toggleMobileSubmenus(event){
+
+        if(event.target.id == "vijesti2" && this.$.vijestiexpand.icon=="expand-more"){
+          this.$.vijestiSub.style="display: block;";
+          this.$.vijestiexpand.icon="expand-less";
+        }else if (event.target.id == "vijesti2" && this.$.vijestiexpand.icon=="expand-less"){
+          this.$.vijestiSub.style="display: none;";
+          this.$.vijestiexpand.icon="expand-more";
+        }else if (event.target.id == "sport2" && this.$.sportexpand.icon=="expand-more"){
+          this.$.sportSub.style="display: block;";
+          this.$.sportexpand.icon="expand-less";
+        }else {
+          this.$.sportSub.style="display: none;";
+          this.$.sportexpand.icon="expand-more";
+        }
+
+      }
+
+
+
+      _pageChanged(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        Polymer.importHref(
+            resolvedPageUrl,
+            null,
+            this._showPage404.bind(this),
+            true);
+      }
+
+      _showPage404() {
+        this.page = 'view404';
+      }
+    }
+
+    window.customElements.define(MyApp.is, MyApp);
+  </script>
+</dom-module>

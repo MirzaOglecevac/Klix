@@ -1,0 +1,707 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-card-master/paper-card.html">
+<link rel="import" href="../bower_components/app-menu/app-menu.html">
+<link rel="import" href="../bower_components/app-menu/app-submenu.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-view1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+      #first  {
+        margin:0;
+        padding: 0;
+        width: 100%;
+        height: 800px;
+        overflow: hidden;
+
+        //outline: 1px solid green;
+      //  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      #second {
+        margin:0;
+        padding: 0 0 10px 0;
+        width: 100%;
+        height: 430px;
+        overflow: hidden;
+
+        //outline: 1px solid green;
+        //box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      #firstLeft  {
+        margin: 0;
+        padding: 0 2%;
+        width: 66%;
+        height: 100%;
+        background-color: #ddd;
+        //outline: 1px solid red;
+        float: left;
+
+      }
+
+      #secondLeft  {
+        margin: 0;
+        padding: 0 2%;
+        width: 66%;
+        height: 100%;
+        background-color: #ddd;
+        //outline: 1px solid red;
+        float: left;
+
+      }
+
+      #firstHeader  {
+        margin: 0;
+        padding: 5px 2%;
+        width: 96%;
+        height: 35px;
+        border-bottom: 1px solid rgba(0,0,0, 0.2);
+        //outline: 1px solid green;
+      }
+
+      #secondHeader  {
+        margin: 0;
+        padding: 10px 2% 0 2%;
+        width: 96%;
+        height: 35px;
+        border-bottom: 1px solid rgba(0,0,0, 0.2);
+        //outline: 1px solid green;
+      }
+
+	  #firstTop {
+		height: 46%;
+		margin: 2% 0 2% 0;
+		padding: 0;
+		//outline: 1px solid green;
+	  }
+
+	  #firstBottom {
+		height: 46%;
+		margin:  0;
+		padding: 0;
+		//outline: 1px solid green;
+	  }
+
+
+      #firstRight, #secondRight  {
+        position: relative;
+        //bottom: 49px;
+        padding: 0;
+        background-color: #fff;
+        overflow-y: scroll;
+        margin: 0;
+
+        width: 30%;
+        height: 100%;
+        //outline: 1px dashed blue;
+        float: right;
+      }
+
+
+
+      paper-tabs {
+        --paper-tabs-selection-bar-color: #000;
+        width: 31%;
+        float: right;
+        margin: 0;
+        position: relative;
+        left: 21px;
+        top: 13px;
+        //outline: 1px dashed green;
+      }
+
+
+
+	  paper-card   {
+	    width: 24%;
+		height: 100%;
+		overflow: hidden;
+		//outline: 1px dashed red;
+	  }
+
+    #middle {
+	   width: 48.5%;
+		height: 100%;
+		overflow: hidden;
+    position: relative;
+    left: 1px;
+		//outline: 1px dashed red;
+	  }
+
+    #middle .cafe-light {
+		    color: #333;
+        font-weight: bold;
+        max-height: 80px;
+        font-size: 0.8em;
+        padding: 0 10px;
+	  }
+
+    #middle iron-image {
+	    height: 125px !important;
+      outline: 1px solid green;
+	  }
+
+    #middle .footer{
+	    position: relative;
+      top: 45px;
+      padding: 0 5px;
+	  }
+
+    paper-card:hover{
+	   box-shadow: 0 0 10px rgba(0, 0, 0, 0.14), 0 3px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+     cursor: pointer;
+	  }
+
+	  paper-card .setMarginRight {
+		margin-right: 2%;
+
+	  }
+
+    #second paper-card {
+  		margin-top: 10px;
+      height: 94% !important;
+      margin-bottom: 10px !important;
+	  }
+
+
+    paper-card .cafe-light {
+		    color: #333;
+        font-weight: bold;
+        max-height: 80px;
+        font-size: 0.8em;
+
+	  }
+
+    paper-card  .footer {
+		    font-size: 0.7em;
+        color: #999;
+      position: relative;
+      top: 60px;
+	  }
+
+    paper-card  .footer iron-icon {
+      --iron-icon-height: 14px;
+      --iron-icon-width: 14px;
+	  }
+
+
+
+      #najcitanije, #najnovije, #preporuke {
+        margin: 0;
+        padding: 5px;
+      }
+
+      #najcitanije, #preporuke {
+        display: none;
+      }
+
+      #najcitanije .itemHeading, #najnovije .itemHeading, #preporuke .itemHeading{
+        font-size: 11px;
+        text-transform: uppercase;
+        color: red;
+        padding-bottom: 0;
+        padding-top: 10px;
+        margin: 0;
+      }
+
+      #najcitanije .itemHeading span, #najnovije .itemHeading span, #preporuke .itemHeading span{
+        display: inline-block;
+        float: right;
+        color: #888;
+        text-transform: lowercase;
+        font-size: 10px;
+      }
+
+      #najcitanije iron-icon, #najnovije iron-icon, #preporuke iron-icon{
+        --iron-icon-height: 14px;
+        --iron-icon-width: 14px;
+        padding-bottom: 0px;
+      }
+
+      #najcitanije .itemText,  #najnovije .itemText, #preporuke .itemText{
+        font-size: 13px;
+        color: #111;
+        padding-top: 0;
+        margin: 0;
+      }
+
+      #najcitanije > div:hover .itemText, #najnovije > div:hover .itemText, #preporuke > div:hover .itemText{
+        color: #999;
+        cursor: pointer;
+      }
+
+
+      @media only screen and (max-width: 1070px) {
+          #firstRight {
+            display: none !important;
+          }
+
+          #tabCircles  {
+           position: relative;
+           left: 20% !important;
+           width: 60% !important;
+         }
+
+          paper-tabs {
+            display: none !important;
+          }
+
+          #firstLeft {
+            width: 96%;
+          }
+        }
+
+       #date  {
+          padding-top: 6px;
+          display: inline-block;
+          width: 25%;
+          float: left;
+          //outline: 1px solid red;
+        }
+
+        #tabCircles  {
+          padding: 5px 0;
+          display: inline-block;
+          width: 40%;
+          float: left;
+          //outline: 1px solid red;
+          position: relative;
+          left: 8%;
+        }
+
+
+        .circles  {
+          display: inline-block;
+          width: 24%;
+          font-size: 0.7em;
+          //outline: 1px dashed blue;
+          margin: 0;
+          color: #999;
+          text-align: center;
+        }
+
+        .circleButtons {
+          //display: block;
+          color: #999;
+          --iron-icon-height: 16px;
+          --iron-icon-width: 16px;
+          position: relative;
+          right: 23px;
+          top: 22px;
+        }
+
+        .trePre {
+          position: relative;
+          right: 35px;
+        }
+
+        #trenutno, #tacnovrijeme, #jucer, #prekjucer {
+          cursor: pointer;
+        }
+
+        #trenutno, #trenutno iron-icon {
+          color: #111;
+        }
+
+        #tacnovrijeme iron-icon, #jucer iron-icon, #prekjucer iron-icon{
+          display: none;
+        }
+
+        #vise:hover{
+          color: #fff;
+          background-color: #333;
+          cursor: pointer;
+        }
+
+
+    </style>
+
+    <div class="card">
+      <div id="firstHeader">
+        <div id="date"> četvrtak, 25.01.2018</div>
+        <div id="tabCircles">
+          <div id="trenutno" class="circles" on-click="showNews">Trenutno <iron-icon id="trenutnoIcon" icon="radio-button-checked" class="circleButtons trePre"></iron-icon></div>
+          <div id="tacnovrijeme" class="circles" on-click="showNews">07:51 <iron-icon id="tacnoVrijemeIcon" icon="radio-button-checked" class="circleButtons"></iron-icon></div>
+          <div id="jucer" class="circles" on-click="showNews">Jucer <iron-icon id="jucerIcon" icon="radio-button-checked" class="circleButtons"></iron-icon></div>
+          <div id="prekjucer" class="circles" on-click="showNews">Prekjucer <iron-icon id="prekjucerIcon" icon="radio-button-checked" class="circleButtons trePre"></iron-icon></div>
+        </div>
+        <paper-tabs selected="0" hide-scroll-button>
+          <paper-tab id="1" on-click="tabChange">Najnovije</paper-tab>
+          <paper-tab id="2" on-click="tabChange">Najčitanije</paper-tab>
+          <paper-tab id="3" on-click="tabChange">Preporuke</paper-tab>
+        </paper-tabs>
+      </div>
+
+      <div id="first">
+
+
+        <div id="secondLeft">
+			<div id="firstTop">
+			<paper-card image="sjednica.jpeg">
+			  <div class="card-content">
+
+          <p class="cafe-light">Zastupnici Parlamenta FBiH danas o Zakonu o PIO-u, opozicija nezadovoljna rješenjem </p>
+          <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+
+			  </div>
+
+
+			</paper-card>
+
+      <paper-card id="middle" image="protest.jpg">
+			  <div class="big-card">
+
+          <p class="cafe-light">Zastupnici Parlamenta FBiH danas o Zakonu o PIO-u, opozicija nezadovoljna rješenjem </p>
+          <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+
+			  </div>
+
+			</paper-card>
+
+
+
+
+			<paper-card style="position: relative; left: 0.5%;" image="ohr.jpg">
+			  <div class="card-content">
+  				<p class="cafe-light">Hoce li OHR umjesto posredovanja konacno prelomiti svojim prijedlogom izbornog zakona. </p>
+          <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+        </div>
+			</paper-card>
+
+
+        </div>
+
+
+			<div id="firstBottom">
+			<paper-card image="ohr.jpg">
+			  <div class="card-content setMarginRight">
+
+          <p class="cafe-light">Hoce li OHR umjesto posredovanja konacno prelomiti svojim prijedlogom izbornog zakona. </p>
+          <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+
+
+			  </div>
+
+			</paper-card>
+
+			<paper-card image="sjednica.jpeg">
+			  <div class="card-content setMarginRight">
+
+          <p class="cafe-light">Zastupnici Parlamenta FBiH danas o Zakonu o PIO-u, opozicija nezadovoljna rješenjem </p>
+          <p class="footer"> prije 2h 3min  <span><iron-icon icon="question-answer"></iron-icon> 11 </span></p>
+
+			  </div>
+
+			</paper-card>
+
+			<paper-card image="ohr.jpg">
+			  <div class="card-content setMarginRight">
+
+          <p class="cafe-light">Hoce li OHR umjesto posredovanja konacno prelomiti svojim prijedlogom izbornog zakona. </p>
+          <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+
+			  </div>
+
+			</paper-card>
+
+			<paper-card image="sjednica.jpeg">
+			  <div class="card-content">
+
+          <p class="cafe-light">Zastupnici Parlamenta FBiH danas o Zakonu o PIO-u, opozicija nezadovoljna rješenjem </p>
+          <p class="footer"> prije 2h 3min  <span><iron-icon icon="question-answer"></iron-icon> 11 </span></p>
+			  </div>
+
+			</paper-card>
+
+        </div>
+
+		</div>
+
+
+
+
+
+        <div id="firstRight">
+          <!--<paper-tabs selected="0" scrollable>
+            <paper-tab id="1" on-click="tabChange">Najnovije</paper-tab>
+            <paper-tab id="2" on-click="tabChange">Najčitanije</paper-tab>
+            <paper-tab id="3" on-click="tabChange">Preporuke</paper-tab>
+          </paper-tabs> -->
+
+          <div id="najnovije">
+            <div>
+              <p class="itemHeading"> Heading 1 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 2 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 3 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 1 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 1 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 2 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 3 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 2 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 3 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 4 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 5 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 6 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 7 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 8 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 9 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+          </div>
+
+          <div id="najcitanije">
+            <div>
+              <p class="itemHeading"> Heading 1 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 2 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 3 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+          </div>
+
+          <div id="preporuke">
+            <div>
+              <p class="itemHeading"> Heading 1 <span><iron-icon icon="timeline"> </iron-icon>1.2k</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 2 <span><iron-icon icon="timeline"> </iron-icon>1.5k</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 3 <span><iron-icon icon="timeline"> </iron-icon>3.2k</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+            <div>
+              <p class="itemHeading"> Heading 4 <span><iron-icon icon="timeline"> </iron-icon>22k</span></p>
+              <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="card">
+
+    <div id="second">
+
+      <div id="secondHeader">
+        <iron-icon icon="label" style="color: orange; --iron-icon-height: 14px; --iron-icon-width: 14px; padding: 0 5px 3px 0;"></iron-icon>Izdvojeno
+        <div id="tagovi" style="display: inline-block;  position: relative;
+        left: 15px; float: right; width: 30%;"><iron-icon icon="timeline" style="--iron-icon-height: 14px; --iron-icon-width: 14px;  padding: 0 5px 3px 0;"></iron-icon> Tagovi <span id="vise" style="font-size: 12px; display: inline-block; border: 1px solid #ccc; padding: 3px; border-radius: 10px; float: right;">Vise <iron-icon icon="arrow-forward" style=" --iron-icon-height: 14px; --iron-icon-width: 14px; padding: 0 5px 3px 0;"></iron-icon></span></div>
+      </div>
+
+      <div id="firstLeft">
+
+
+
+    <paper-card image="ohr.jpg">
+      <div class="card-content setMarginRight">
+
+        <p class="cafe-light">Hoce li OHR umjesto posredovanja konacno prelomiti svojim prijedlogom izbornog zakona. </p>
+        <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+
+
+      </div>
+
+    </paper-card>
+
+    <paper-card image="sjednica.jpeg">
+      <div class="card-content setMarginRight">
+
+        <p class="cafe-light">Zastupnici Parlamenta FBiH danas o Zakonu o PIO-u, opozicija nezadovoljna rješenjem </p>
+        <p class="footer"> prije 2h 3min  <span><iron-icon icon="question-answer"></iron-icon> 11 </span></p>
+
+      </div>
+
+    </paper-card>
+
+    <paper-card image="ohr.jpg">
+      <div class="card-content setMarginRight">
+
+        <p class="cafe-light">Hoce li OHR umjesto posredovanja konacno prelomiti svojim prijedlogom izbornog zakona. </p>
+        <p class="footer"> prije 1h 23min  <span><iron-icon icon="question-answer"></iron-icon> 20 </span></p>
+
+      </div>
+
+    </paper-card>
+
+    <paper-card image="sjednica.jpeg">
+      <div class="card-content">
+
+        <p class="cafe-light">Zastupnici Parlamenta FBiH danas o Zakonu o PIO-u, opozicija nezadovoljna rješenjem </p>
+        <p class="footer"> prije 2h 3min  <span><iron-icon icon="question-answer"></iron-icon> 11 </span></p>
+      </div>
+
+    </paper-card>
+
+
+
+  </div>
+
+
+
+
+
+      <div id="secondRight">
+        <!--<paper-tabs selected="0" scrollable>
+          <paper-tab id="1" on-click="tabChange">Najnovije</paper-tab>
+          <paper-tab id="2" on-click="tabChange">Najčitanije</paper-tab>
+          <paper-tab id="3" on-click="tabChange">Preporuke</paper-tab>
+        </paper-tabs> -->
+
+        <div id="najnovije">
+          <div>
+            <p class="itemHeading"> Heading 1 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+            <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+          </div>
+
+
+          <div>
+            <p class="itemHeading"> Heading 5 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+            <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+          </div>
+          <div>
+            <p class="itemHeading"> Heading 6 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+            <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+          </div>
+          <div>
+            <p class="itemHeading"> Heading 7 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+            <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+          </div>
+          <div>
+            <p class="itemHeading"> Heading 8 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+            <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+          </div>
+          <div>
+            <p class="itemHeading"> Heading 9 <span><iron-icon icon="alarm"> </iron-icon>10min</span></p>
+            <p class="itemText"> SDP se povlači iz razgovora o izmjenama Izbornog zakona BiH</p>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+  </template>
+
+  <script>
+    class MyView1 extends Polymer.Element {
+      static get is() { return 'my-view1'; }
+
+      tabChange(event){
+        var id = parseInt(event.target.id);
+
+        if(id == 1){
+          this.$.najnovije.style="display: block;";
+          this.$.najcitanije.style="display: none;";
+          this.$.preporuke.style="display: none;";
+        }else if(id == 2){
+          this.$.najnovije.style="display: none;";
+          this.$.najcitanije.style="display: block;";
+          this.$.preporuke.style="display: none;";
+        }else {
+          this.$.najnovije.style="display: none;";
+          this.$.najcitanije.style="display: none;";
+          this.$.preporuke.style="display: block;";
+        }
+
+      }
+
+      showNews(event){
+        if(event.target.id == "trenutno"){
+          this.$.firstLeft.style="display: block;";
+          this.$.trenutno.style="color: #111;";
+          this.$.trenutnoIcon.style="display: inline-block;";
+        }else {
+          this.$.firstLeft.style="display: none;";
+          this.$.trenutno.style="color: #999;";
+          this.$.trenutnoIcon.style="display: none;";
+        }
+      }
+    }
+
+    window.customElements.define(MyView1.is, MyView1);
+  </script>
+</dom-module>
